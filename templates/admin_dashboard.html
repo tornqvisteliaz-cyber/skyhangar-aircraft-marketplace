@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container">
+    <h1>Admin Dashboard</h1>
+    <p class="welcome">Welcome back, {{ user.username }}.</p>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">{{ stats.aircrafts }}</div>
+        <div class="stat-label">Aircraft</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ stats.orders }}</div>
+        <div class="stat-label">Total Orders</div>
+      </div>
+      <div class="stat-card highlight">
+        <div class="stat-number">{{ stats.pending_orders }}</div>
+        <div class="stat-label">Pending Orders</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ stats.subscribers }}</div>
+        <div class="stat-label">Subscribers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ stats.newsletters }}</div>
+        <div class="stat-label">Newsletters</div>
+      </div>
+    </div>
+
+    <div class="admin-nav">
+      <a href="/admin/aircrafts" class="btn btn-outline">Manage Aircraft</a>
+      <a href="/admin/orders" class="btn btn-outline">Manage Orders</a>
+      <a href="/admin/newsletters" class="btn btn-outline">Newsletters</a>
+      <a href="/admin/subscribers" class="btn btn-outline">Subscribers</a>
+      <a href="/admin/aircraft/new" class="btn btn-primary">+ Add New Aircraft</a>
+    </div>
+
+    <h2>Recent Orders</h2>
+    {% if recent_orders %}
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Aircraft</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for o in recent_orders %}
+          <tr>
+            <td>#{{ o.id }}</td>
+            <td>{{ o.customer_name }}</td>
+            <td>{{ o.aircraft_name }}</td>
+            <td>${{ "{:,.0f}".format(o.total_price) }}</td>
+            <td><span class="badge badge-{{ o.status }}">{{ o.status }}</span></td>
+            <td>{{ o.created_at[:10] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p>No orders yet.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
