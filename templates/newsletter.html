@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Newsletter{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container narrow">
+    <h1>SkyHangar Newsletter</h1>
+    <p class="lead">Latest news, new arrivals, and aviation updates from our team.</p>
+
+    {% for n in newsletters %}
+    <article class="newsletter-item">
+      <h2>{{ n.title }}</h2>
+      <time>{{ n.created_at[:10] }}</time>
+      <div class="nl-content">{{ n.content | replace('\n', '<br>') | safe }}</div>
+    </article>
+    {% else %}
+    <p>No newsletters published yet.</p>
+    {% endfor %}
+
+    <div class="subscribe-inline">
+      <h3>Never miss an update</h3>
+      <form action="/subscribe" method="POST" class="subscribe-form">
+        <input type="email" name="email" placeholder="Your email" required>
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}
