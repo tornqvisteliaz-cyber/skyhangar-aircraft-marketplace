@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}{{ "Edit" if aircraft else "Add" }} Aircraft{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container narrow">
+    <h1>{{ "Edit" if aircraft else "Add New" }} Aircraft</h1>
+
+    <form action="/admin/aircraft/save" method="POST" class="admin-form">
+      {% if aircraft %}
+      <input type="hidden" name="id" value="{{ aircraft.id }}">
+      {% endif %}
+
+      <div class="form-row">
+        <label>Name *</label>
+        <input type="text" name="name" value="{{ aircraft.name if aircraft else '' }}" required>
+      </div>
+      <div class="form-row">
+        <label>Model</label>
+        <input type="text" name="model" value="{{ aircraft.model if aircraft else '' }}">
+      </div>
+      <div class="form-row">
+        <label>Description</label>
+        <textarea name="description" rows="4">{{ aircraft.description if aircraft else '' }}</textarea>
+      </div>
+      <div class="form-row-group">
+        <div class="form-row">
+          <label>Price (USD) *</label>
+          <input type="number" name="price" step="0.01" value="{{ aircraft.price if aircraft else '' }}" required>
+        </div>
+        <div class="form-row">
+          <label>Year</label>
+          <input type="number" name="year" value="{{ aircraft.year if aircraft else '' }}">
+        </div>
+      </div>
+      <div class="form-row-group">
+        <div class="form-row">
+          <label>Seats</label>
+          <input type="number" name="seats" value="{{ aircraft.seats if aircraft else '' }}">
+        </div>
+        <div class="form-row">
+          <label>Range (km)</label>
+          <input type="number" name="range_km" value="{{ aircraft.range_km if aircraft else '' }}">
+        </div>
+        <div class="form-row">
+          <label>Stock</label>
+          <input type="number" name="stock" value="{{ aircraft.stock if aircraft else 1 }}">
+        </div>
+      </div>
+      <div class="form-row">
+        <label>Image URL</label>
+        <input type="url" name="image_url" value="{{ aircraft.image_url if aircraft else '' }}" placeholder="https://...">
+      </div>
+      <div class="form-row">
+        <label>Trailer Embed URL (YouTube embed)</label>
+        <input type="url" name="trailer_url" value="{{ aircraft.trailer_url if aircraft else '' }}" placeholder="https://www.youtube.com/embed/...">
+      </div>
+      <div class="form-row checkbox-row">
+        <label>
+          <input type="checkbox" name="featured" value="1" {% if aircraft and aircraft.featured %}checked{% endif %}>
+          Featured on homepage
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save Aircraft</button>
+        <a href="/admin/aircrafts" class="btn btn-outline">Cancel</a>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}
