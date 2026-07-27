@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Subscribers{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container">
+    <h1>Newsletter Subscribers</h1>
+    <p>{{ subscribers|length }} total subscribers</p>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Subscribed On</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in subscribers %}
+          <tr>
+            <td>{{ s.id }}</td>
+            <td>{{ s.email }}</td>
+            <td>{{ s.created_at[:10] }}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="3">No subscribers yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <p><a href="/admin">← Back to dashboard</a></p>
+  </div>
+</section>
+{% endblock %}
