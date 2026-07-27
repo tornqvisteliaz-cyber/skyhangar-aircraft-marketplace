@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}SkyHangar{% endblock %} | Aircraft Marketplace</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <span class="logo-icon">✈</span>
+        <span class="logo-text">SkyHangar</span>
+      </a>
+      <nav class="main-nav">
+        <a href="/">Home</a>
+        <a href="/aircrafts">Aircraft</a>
+        <a href="/newsletter">Newsletter</a>
+        {% if user and user.is_admin %}
+          <a href="/admin" class="admin-link">Admin Panel</a>
+          <a href="/logout">Logout</a>
+        {% else %}
+          <a href="/login">Admin Login</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 SkyHangar Aircraft Marketplace · Local demo application</p>
+      <p class="footer-note">This is a demonstration app running on your local machine.</p>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
