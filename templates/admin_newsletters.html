@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Newsletters{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container">
+    <h1>Newsletters</h1>
+
+    <div class="admin-form-box">
+      <h2>Post New Newsletter</h2>
+      <form action="/admin/newsletter/save" method="POST" class="admin-form">
+        <div class="form-row">
+          <label>Title *</label>
+          <input type="text" name="title" required>
+        </div>
+        <div class="form-row">
+          <label>Content *</label>
+          <textarea name="content" rows="6" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Publish Newsletter</button>
+      </form>
+    </div>
+
+    <h2>Published Newsletters</h2>
+    {% for n in newsletters %}
+    <article class="newsletter-item admin-nl">
+      <h3>{{ n.title }}</h3>
+      <time>{{ n.created_at[:10] }}</time>
+      <p>{{ n.content[:200] }}{% if n.content|length > 200 %}...{% endif %}</p>
+    </article>
+    {% else %}
+    <p>No newsletters yet.</p>
+    {% endfor %}
+
+    <p><a href="/admin">← Back to dashboard</a></p>
+  </div>
+</section>
+{% endblock %}
