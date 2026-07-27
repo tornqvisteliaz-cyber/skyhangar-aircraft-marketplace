@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Manage Aircraft{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h1>Manage Aircraft</h1>
+      <a href="/admin/aircraft/new" class="btn btn-primary">+ Add New Aircraft</a>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Model</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Featured</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in aircrafts %}
+          <tr>
+            <td>{{ a.id }}</td>
+            <td>{{ a.name }}</td>
+            <td>{{ a.model }}</td>
+            <td>${{ "{:,.0f}".format(a.price) }}</td>
+            <td>{{ a.stock }}</td>
+            <td>{{ "Yes" if a.featured else "No" }}</td>
+            <td class="actions">
+              <a href="/admin/aircraft/edit/{{ a.id }}" class="btn btn-sm">Edit</a>
+              <a href="/admin/aircraft/delete/{{ a.id }}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this aircraft?')">Delete</a>
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="7">No aircraft yet. Add one!</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <p><a href="/admin">← Back to dashboard</a></p>
+  </div>
+</section>
+{% endblock %}
