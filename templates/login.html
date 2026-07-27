@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Admin Login{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container narrow">
+    <div class="login-card">
+      <h1>Admin Login</h1>
+      <p>Access the control panel to manage aircraft, orders, and newsletters.</p>
+
+      {% if error %}
+      <div class="alert alert-error">{{ error }}</div>
+      {% endif %}
+
+      <form action="/login" method="POST" class="login-form">
+        <div class="form-row">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required autofocus>
+        </div>
+        <div class="form-row">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+      </form>
+
+      <p class="demo-hint">Demo credentials: <code>admin</code> / <code>admin123</code></p>
+    </div>
+  </div>
+</section>
+{% endblock %}
