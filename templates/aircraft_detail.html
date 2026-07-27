@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}{{ aircraft.name }}{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container">
+    <a href="/aircrafts" class="back-link">← Back to listings</a>
+
+    <div class="detail-grid">
+      <div class="detail-media">
+        <div class="detail-image" style="background-image:url('{{ aircraft.image_url or "https://placehold.co/800x500/1e3a5f/ffffff?text=Aircraft" }}')"></div>
+        {% if aircraft.trailer_url %}
+        <div class="trailer-box">
+          <h3>Watch Trailer</h3>
+          <div class="video-wrapper">
+            <iframe src="{{ aircraft.trailer_url }}" title="Trailer" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="detail-info">
+        <h1>{{ aircraft.name }}</h1>
+        <p class="model">{{ aircraft.model }}</p>
+        <p class="price-large">${{ "{:,.0f}".format(aircraft.price) }}</p>
+
+        <ul class="specs">
+          <li><strong>Year:</strong> {{ aircraft.year or "—" }}</li>
+          <li><strong>Seats:</strong> {{ aircraft.seats or "—" }}</li>
+          <li><strong>Range:</strong> {{ aircraft.range_km or "—" }} km</li>
+          <li><strong>Available:</strong> {{ aircraft.stock }} unit(s)</li>
+        </ul>
+
+        <p class="description">{{ aircraft.description }}</p>
+
+        {% if aircraft.stock > 0 %}
+        <div class="order-box">
+          <h3>Place an Order Inquiry</h3>
+          <form action="/order" method="POST" class="order-form">
+            <input type="hidden" name="aircraft_id" value="{{ aircraft.id }}">
+            <div class="form-row">
+              <label>Full Name *</label>
+              <input type="text" name="name" required>
+            </div>
+            <div class="form-row">
+              <label>Email *</label>
+              <input type="email" name="email" required>
+            </div>
+            <div class="form-row">
+              <label>Phone</label>
+              <input type="tel" name="phone">
+            </div>
+            <div class="form-row">
+              <label>Notes / Questions</label>
+              <textarea name="notes" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit Order Inquiry</button>
+          </form>
+        </div>
+        {% else %}
+        <p class="sold-out">Currently out of stock</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
