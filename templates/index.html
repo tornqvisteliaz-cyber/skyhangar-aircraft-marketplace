@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <h1>Find Your Next Aircraft</h1>
+      <p>Browse premium aircraft, watch official trailers, and connect with our team. From training planes to light jets — everything in one place.</p>
+      <a href="/aircrafts" class="btn btn-primary">Browse Aircraft</a>
+    </div>
+  </div>
+</section>
+
+{% if subscribed %}
+<div class="container" style="margin-top:1.5rem">
+  <div class="alert alert-success">Thank you for subscribing to the SkyHangar newsletter!</div>
+</div>
+{% endif %}
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Featured Aircraft</h2>
+      <a href="/aircrafts" class="link-more">View all →</a>
+    </div>
+    <div class="card-grid">
+      {% for a in featured %}
+      <article class="card">
+        <div class="card-image" style="background-image:url('{{ a.image_url or "https://placehold.co/600x400/1e3a5f/ffffff?text=Aircraft" }}')"></div>
+        <div class="card-body">
+          <h3>{{ a.name }}</h3>
+          <p class="card-meta">{{ a.year }} · {{ a.seats }} seats · {{ a.range_km }} km range</p>
+          <p class="card-price">${{ "{:,.0f}".format(a.price) }}</p>
+          <a href="/aircraft/{{ a.id }}" class="btn btn-outline">View Details</a>
+        </div>
+      </article>
+      {% else %}
+      <p>No featured aircraft available right now.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container newsletter-box">
+    <div>
+      <h2>Stay in the Loop</h2>
+      <p>Receive new aircraft listings, exclusive offers, and aviation news directly in your inbox.</p>
+      {% if latest_nl %}
+      <p class="latest-nl"><strong>Latest:</strong> {{ latest_nl.title }}</p>
+      {% endif %}
+    </div>
+    <form action="/subscribe" method="POST" class="subscribe-form">
+      <input type="email" name="email" placeholder="Your email address" required>
+      <button type="submit" class="btn btn-primary">Subscribe</button>
+    </form>
+  </div>
+</section>
+{% endblock %}
